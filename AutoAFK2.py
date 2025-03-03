@@ -147,7 +147,8 @@ def main() -> None:
         "Run Quests",
         "Use Dream Realm attempts",
         "Farm Team-Up Chat",
-        "Farm Chain AFK Proxy Request",
+        "Farm Chain AFK Proxy Request (Normal AFK stages)",
+        "Farm Chain AFK Proxy Request (Talent stages)",
     ]
     selection = SelectionMenu.get_selection(
         options,
@@ -269,13 +270,20 @@ def main() -> None:
             bot.team_up()
 
     if selection == 9:
-        logger.info("Starting up Chain Proxy farming")
+        logger.info("Starting up Chain Proxy farming (Normal AFK stages)")
         logger.info(
             "For this function you need to open the request yourself and start this function at the stage setup screen\n"
         )
 
-        bot.afk_stage_chain_proxy()
+        bot.afk_stage_chain_proxy("afk")
 
+    if selection == 10:
+        logger.info("Starting up Chain Proxy farming (Talent stages)")
+        logger.info(
+            "For this function you need to open the request yourself and start this function at the stage setup screen\n"
+        )
+
+        bot.afk_stage_chain_proxy("talent")
 
 if __name__ == "__main__":
     main()

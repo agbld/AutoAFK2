@@ -1653,7 +1653,7 @@ class AFKJAutomation(EmulatorInteractions):
             self.click_xy(370, 1600, seconds=2)  # AFK Stage button
             self.click("buttons/confirm", suppress=True)
 
-    def afk_stage_chain_proxy(self) -> None:
+    def afk_stage_chain_proxy(self, stage_type: str) -> None:
         """Starts an AFK Stage chain by attempting to start the stage and then
         automatically retrying upon defeat. The method changes formations after
         a specified number of defeats, as configured.
@@ -1661,6 +1661,15 @@ class AFKJAutomation(EmulatorInteractions):
         This method is a proxy to the `blind_push` method with the "afkstages"
         argument set to True. It is intended to be used for convenience.
         """
+
+        if stage_type == "afk":
+            button = "buttons/battle"
+        elif stage_type == "talent":
+            button = "buttons/talent_trials"
+        else:
+            self.logger.info("Invalid stage type provided!")
+            return
+
         self.formation_handler()
         self.click(
             "buttons/battle",
@@ -1674,7 +1683,7 @@ class AFKJAutomation(EmulatorInteractions):
             # Victory Logic
             if self.is_visible("buttons/next", retry=1, click=True, seconds=3):
                 self.click(
-                    "buttons/battle",
+                    button,
                     retry=1,
                     suppress=True,
                     seconds=5,
